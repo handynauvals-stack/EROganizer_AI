@@ -13,17 +13,24 @@ class AdminUserSeeder extends Seeder
      */
     public function run(): void
     {
-        $legacyAdmin = User::where('email', 'admin@ub.com')->first();
-        if ($legacyAdmin && ! User::where('email', 'admin@ub.ac.id')->exists()) {
-            $legacyAdmin->update(['email' => 'admin@ub.ac.id']);
+        $canonicalEmail = 'admin@eroganizer.com';
+        $canonicalPassword = 'password123';
+
+        $legacyAdmins = User::whereIn('email', ['admin@ub.com', 'admin@ub.ac.id'])
+            ->get();
+
+        foreach ($legacyAdmins as $legacyAdmin) {
+            if ($legacyAdmin->email !== $canonicalEmail) {
+                $legacyAdmin->update(['email' => $canonicalEmail]);
+            }
         }
 
         User::updateOrCreate(
-            ['email' => 'admin@ub.ac.id'],
+            ['email' => $canonicalEmail],
             [
                 'name' => 'Admin',
-                'email' => 'admin@ub.ac.id',
-                'password' => Hash::make('admin123'),
+                'email' => $canonicalEmail,
+                'password' => Hash::make($canonicalPassword),
                 'role' => 'admin',
             ]
         );
