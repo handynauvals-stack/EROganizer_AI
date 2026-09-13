@@ -16,23 +16,35 @@ class AdminUserSeeder extends Seeder
         $canonicalEmail = 'admin@eroganizer.com';
         $canonicalPassword = 'password123';
 
-        $legacyAdmins = User::whereIn('email', ['admin@ub.com', 'admin@ub.ac.id'])
-            ->get();
+        $adminCandidates = User::whereIn('email', [
+            'admin@eroganizer.com',
+            'admin@ub.ac.id',
+            'admin@ub.com',
+        ])->orderBy('id')->get();
 
-        foreach ($legacyAdmins as $legacyAdmin) {
-            if ($legacyAdmin->email !== $canonicalEmail) {
-                $legacyAdmin->update(['email' => $canonicalEmail]);
-            }
-        }
+        $primaryAdmin = $adminCandidates->first();
 
-        User::updateOrCreate(
-            ['email' => $canonicalEmail],
-            [
+        if ($primaryAdmin) {
+            $primaryAdmin->fill([
                 'name' => 'Admin',
                 'email' => $canonicalEmail,
                 'password' => Hash::make($canonicalPassword),
                 'role' => 'admin',
-            ]
-        );
+            ]);
+            $primaryAdmin->save();
+
+            foreach ($adminCandidates->skip(1) as $duplicateAdmin) {
+                $duplicateAdmin->delete();
+            }
+
+            return;
+        }
+
+        User::create([
+            'name' => 'Admin',
+            'email' => $canonicalEmail,
+            'password' => Hash::make($canonicalPassword),
+            'role' => 'admin',
+        ]);
     }
 }
