@@ -1,0 +1,11 @@
+# ai-model: dependensi Python.
+# PyTorch dipasang TERPISAH oleh setup.bat (build-nya tergantung GPU/driver Anda): jangan ditambahkan di sini.
+#
+# Versi di bawah adalah yang SUDAH DIUJI (Python 3.12, Windows 11, PyTorch 2.7.1).
+# Bila ada konflik di Python/OS lain, longgarkan angkanya (mis. ganti == dengan >=).
+transformers==5.21.0
+peft==0.21.2
+accelerate==1.15.0
+huggingface_hub==2.3.0
+fastapi==0.162.0
+uvicorn==0.54.0

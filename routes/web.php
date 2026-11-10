@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\RoomBookingController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\ChatbotController;
 
 Route::get('/', function () {
     if (Illuminate\Support\Facades\Auth::check()) {
@@ -36,6 +37,12 @@ Route::middleware(['auth', 'is_admin'])->prefix('admin')->name('admin.')->group(
     Route::get('/room-bookings', [RoomBookingController::class, 'adminIndex'])->name('room-bookings.index');
     Route::patch('/room-bookings/{roomBooking}/status', [RoomBookingController::class, 'updateStatus'])->name('room-bookings.status');
 
+});
+
+// Chatbot (Qwen) - tersedia untuk admin maupun member yang sudah login
+Route::middleware(['auth.check'])->prefix('chatbot')->name('chatbot.')->group(function () {
+    Route::post('/message', [ChatbotController::class, 'message'])->middleware('throttle:20,1')->name('message');
+    Route::get('/status', [ChatbotController::class, 'status'])->name('status');
 });
 
 // Member Routes - Limited Access

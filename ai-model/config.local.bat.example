@@ -1,0 +1,25 @@
+@echo off
+rem ============================================================================
+rem  config.local.bat.example - CONTOH pengaturan pribadi.
+rem  Salin menjadi  config.local.bat  (file itu tidak ikut git), lalu hapus "rem" pada baris yang ingin dipakai.
+rem  Pola "if not defined" membuat variabel yang Anda set di CMD tetap menang.
+rem ============================================================================
+
+rem --- memakai model lain (unduh dulu: download_model.bat Qwen/Qwen2.5-1.5B-Instruct) ---
+rem if not defined MODEL_NAME set "MODEL_NAME=Qwen2.5-1.5B-Instruct"
+
+rem --- nama hasil training; juga adapter yang dimuat run_server.bat ---
+rem if not defined RUN_NAME set "RUN_NAME=percobaan1"
+
+rem --- VRAM kecil (mis. 4-6 GB): batch lebih kecil, akumulasi lebih banyak (batch efektif sama) ---
+rem if not defined TOKENS_PER_BATCH set "TOKENS_PER_BATCH=1200"
+rem if not defined ACCUM set "ACCUM=6"
+
+rem --- arsitektur selain Qwen/Llama/Mistral/Gemma: beri LoRA ke semua layer linear ---
+rem if not defined TARGET_MODULES set "TARGET_MODULES=all-linear"
+
+rem --- port layanan AI (samakan dengan CHATBOT_URL di .env Laravel) ---
+rem if not defined SERVER_PORT set "SERVER_PORT=8001"
+
+rem --- model/adapter di folder lain ---
+rem if not defined MODEL_DIR set "MODEL_DIR=D:\models\Qwen2.5-0.5B-Instruct"

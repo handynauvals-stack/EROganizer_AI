@@ -9,3 +9,7 @@
 /.github export-ignore
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
+
+# Skrip batch Windows harus CRLF; dengan LF saja label goto bisa gagal ditemukan
+*.bat text eol=crlf
+*.cmd text eol=crlf

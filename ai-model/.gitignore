@@ -1,0 +1,19 @@
+# ===== lingkungan & cache lokal (besar; dibuat ulang oleh setup.bat) =====
+venv/
+.workdir/
+__pycache__/
+*.pyc
+
+# ===== model dasar yang diunduh (download_model.bat) =====
+models/
+
+# ===== hasil training (dibuat oleh train.bat; bisa dibangun ulang) =====
+training/output/
+training/datasets/
+training/reports/
+
+# ===== pengaturan pribadi =====
+config.local.bat
+
+# ===== berkas sementara uji =====
+*.sqlite
